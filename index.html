@@ -17,7 +17,7 @@
 <div class="topline"><div class="menu-wrap"><button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="quickMenu"><span class="hamburger" aria-hidden="true"><i></i><i></i><i></i></span> Menu</button><div class="menu-pop hidden" id="quickMenu"><button data-tab="sample">Sample Setlist</button><button data-tab="upcoming">Upcoming Shows</button><button data-tab="missing">Unplayed Songs</button></div></div><span class="brand">OR / UNRAVELED</span><span>Tour archive · 2026</span></div>
 <h1>Every song.<br><em>Every night.</em></h1>
 <p>A fan-made companion to Olivia Rodrigo's Unraveled Tour — explore the songs, compare collected setlists, and revisit concert nights.</p>
-<div class="hero-stats"><button class="stat stat-button" type="button" id="showStat"><strong id="showCount">19</strong><span>SHOWS</span></button><button class="stat stat-button" type="button" id="songStat"><strong id="songCount">—</strong><span>SONGS</span></button><button class="stat stat-button" type="button" id="videoStat"><strong id="videoCount">4</strong><span>YOUTUBE LINKS</span></button></div>
+<div class="hero-stats"><button class="stat stat-button" type="button" id="standardStat"><strong id="standardCount">23</strong><span>STANDARD SETLIST SONGS</span></button><button class="stat stat-button" type="button" id="surpriseStat"><strong id="surpriseCount">8</strong><span>SURPRISE SONGS</span></button><button class="stat stat-button" type="button" id="showStat"><strong id="showCount">19</strong><span>SHOWS</span></button><button class="stat stat-button" type="button" id="videoStat"><strong id="videoCount">4</strong><span>FULL-SHOW YOUTUBE LINKS</span></button></div>
 </header>
 <div class="video-modal hidden" id="videoModal" role="dialog" aria-modal="true" aria-labelledby="videoModalTitle"><div class="video-modal-card"><div class="video-modal-head"><h2 id="videoModalTitle">Shows with YouTube links</h2><button type="button" id="closeVideoModal" aria-label="Close">×</button></div><div id="videoShowList"></div></div></div>
 <main class="wrap">
@@ -112,11 +112,14 @@ const fmtDate = d => new Date(d+"T12:00:00").toLocaleDateString("en-US",{month:"
 const esc = s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const albumOrder=["you seem pretty sad for a girl so in love","SOUR","GUTS","GUTS (SPILLED)"];
 const count = title=>appearances(title).length;
+document.getElementById("standardCount").textContent=standardSongs.length;
+const surpriseCount=new Set(shows.flatMap(s=>s.songs.map(key)).filter(t=>!standardSongs.some(x=>key(x)===t))).size;
+document.getElementById("surpriseCount").textContent=surpriseCount;
 document.getElementById("showCount").textContent=shows.length;
-document.getElementById("songCount").textContent=new Set(shows.flatMap(s=>s.songs.map(key))).size;
 document.getElementById("videoCount").textContent=shows.filter(s=>s.video).length;
+document.getElementById("standardStat").addEventListener("click",()=>openPanel("sample"));
+document.getElementById("surpriseStat").addEventListener("click",()=>openPanel("rankings"));
 document.getElementById("showStat").addEventListener("click",()=>openPanel("shows"));
-document.getElementById("songStat").addEventListener("click",()=>openPanel("rankings"));
 const videoModal=document.getElementById("videoModal");
 function openVideoModal(){const linked=shows.filter(s=>s.video).sort((a,b)=>a.date.localeCompare(b.date));document.getElementById("videoShowList").innerHTML=linked.map(s=>'<div class="video-row"><div><strong>'+fmtDate(s.date)+', 2026</strong><span>'+esc(s.city)+' · '+esc(s.venue)+'</span></div><a class="linkbtn" href="'+esc(s.video)+'" target="_blank" rel="noopener">Watch ↗</a></div>').join("")||'<div class="empty">No YouTube links have been added yet.</div>';videoModal.classList.remove("hidden");}
 document.getElementById("videoStat").addEventListener("click",openVideoModal);
