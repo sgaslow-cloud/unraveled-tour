@@ -122,8 +122,6 @@ function openVideoModal(){const linked=shows.filter(s=>s.video).sort((a,b)=>a.da
 document.getElementById("closeVideoModal").addEventListener("click",()=>videoModal.classList.add("hidden"));
 videoModal.addEventListener("click",e=>{if(e.target===videoModal)videoModal.classList.add("hidden");});
 document.addEventListener("keydown",e=>{if(e.key==="Escape")videoModal.classList.add("hidden");});
-const albumFilter=document.getElementById("albumFilter");
-albumOrder.forEach(a=>{const o=document.createElement("option");o.value=a;o.textContent=a;albumFilter.append(o)});
 const standardSongs=["drop dead","u + me = <3","so american","good 4 u","my way","serena joy","bad idea right?","ballad of a homeschooled girl","vampire","purple","stupid song","maggots for brains","traitor","begged","cigarette smoke","honeybee","favorite crime","drivers license","less","the cure","deja vu","all-american bitch","expectations"];
 function renderSamplePlaylist(){const slot=standardSongs.findIndex(t=>key(t)==="traitor");const items=standardSongs.map(t=>({t}));items.splice(slot+1,0,{t:"Surprise song",placeholder:true});document.getElementById("samplePlaylist").innerHTML=items.map(x=>"<li>"+(x.placeholder?'<strong style="color:#8b527d">SURPRISE SONG</strong>':esc(x.t))+"</li>").join("")}
 const surpriseSongVideos={"lacy":["https://youtu.be/7hCR2MXnUwI?is=Ji_KvZ2EQwq1Ddyg"]};
