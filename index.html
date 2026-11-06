@@ -113,8 +113,7 @@ const esc = s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt
 const albumOrder=["you seem pretty sad for a girl so in love","SOUR","GUTS","GUTS (SPILLED)"];
 const count = title=>appearances(title).length;
 document.getElementById("standardCount").textContent=standardSongs.length;
-const surpriseCount=new Set(shows.flatMap(s=>s.songs.map(key)).filter(t=>!standardSongs.some(x=>key(x)===t))).size;
-document.getElementById("surpriseCount").textContent=surpriseCount;
+document.getElementById("surpriseCount").textContent=8;
 document.getElementById("showCount").textContent=shows.length;
 document.getElementById("videoCount").textContent=shows.filter(s=>s.video).length;
 document.getElementById("standardStat").addEventListener("click",()=>openPanel("sample"));
