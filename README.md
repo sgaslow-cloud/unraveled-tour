@@ -3,16 +3,18 @@
 A mobile-friendly fan-made Olivia Rodrigo Unraveled Tour setlist explorer.
 
 ## Features
-- Search songs and filter by album/group
-- See which archived concert dates include each song
-- Rank songs by appearances across the collected shows
-- Browse concert setlists and available YouTube links
+- Search songs and filter by album
+- See every collected concert date on which a song appeared
+- Rank songs by appearances across the archived shows
+- Browse concert-by-concert setlists and available full-show YouTube links
 - Find catalog tracks absent from the currently collected setlists
 
 ## Website
-The site is a static single-page app in `index.html`. GitHub Pages can publish it directly from the `main` branch root, or the included workflow can publish it automatically after being enabled in repository Actions settings.
+The static single-page app is in `index.html`. GitHub Actions publishes the repository to GitHub Pages after Pages is enabled. The workflow now asks GitHub to enable Pages during setup (`configure-pages` with `enablement: true`); this requires the repository integration to have the necessary administrative permission.
 
-## Data quality
-The starter archive has eight dated records from September 25 through October 8, 2026. The user supplied the three YouTube links currently included. Only the Hartford records have date-specific setlist.fm URLs in this starter dataset; several other show records still point to the general artist page and their song lists are provisional. Verify those entries against date-specific sources before relying on them as confirmed setlists. The song catalog includes the known *SOUR*, *GUTS*, and *GUTS (spilled)* tracks plus a clearly marked “Tour / unclassified” group for titles that have not been confidently assigned to an album.
+## Data status — November 6, 2026
+The archive now contains 19 concert dates from September 25 through October 30, 2026. Eleven later shows (October 11–30) were added from their individual setlist.fm records. Their rotating songs include “happier” (Oct 11), “what's wrong with me” (Oct 12), “pretty isn't pretty” (Oct 17 and Oct 29), “Can't Catch Me Now” (Oct 18), and “lacy” (Oct 26 and Oct 27).
 
-All counts describe only the records included here. “Not in Setlists” does not mean a song has never been performed live. This is a fan project and is not affiliated with Olivia Rodrigo or her team.
+The setlist.fm album grouping identifies 13 tour-era songs under *you seem pretty sad for a girl so in love*, with “serena joy” classified as “Others”; SOUR and GUTS songs are grouped separately. The song catalog is a developing catalog, not a guarantee that every officially released track is represented.
+
+All counts describe only the concert records included here. “Not in Setlists” means not found in this archive, not proof that a song has never been performed live. Setlist.fm records can be edited, so source links are retained for checking. This is a fan project and is not affiliated with Olivia Rodrigo or her team.
