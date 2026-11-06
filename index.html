@@ -17,25 +17,21 @@
 <div class="topline"><div class="menu-wrap"><button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="quickMenu"><span class="hamburger" aria-hidden="true"><i></i><i></i><i></i></span> Menu</button><div class="menu-pop hidden" id="quickMenu"><button data-tab="sample">Sample Setlist</button><button data-tab="upcoming">Upcoming Shows</button><button data-tab="missing">Unplayed Songs</button></div></div><span class="brand">OR / UNRAVELED</span><span>Tour archive · 2026</span></div>
 <h1>Every song.<br><em>Every night.</em></h1>
 <p>A fan-made companion to Olivia Rodrigo's Unraveled Tour — explore the songs, compare collected setlists, and revisit concert nights.</p>
-<div class="hero-stats"><button class="stat stat-button" type="button" id="standardStat"><strong id="standardCount">23</strong><span>STANDARD SETLIST SONGS</span></button><button class="stat stat-button" type="button" id="surpriseStat"><strong id="surpriseCount">8</strong><span>SURPRISE SONGS</span></button><button class="stat stat-button" type="button" id="showStat"><strong id="showCount">19</strong><span>SHOWS</span></button><button class="stat stat-button" type="button" id="videoStat"><strong id="videoCount">4</strong><span>FULL-SHOW YOUTUBE LINKS</span></button></div>
+<div class="hero-stats"><button class="stat stat-button" type="button" id="showStat"><strong id="showCount">19</strong><span>SHOWS</span></button><button class="stat stat-button" type="button" id="standardStat"><strong id="standardCount">23</strong><span>STANDARD SETLIST SONGS</span></button><button class="stat stat-button" type="button" id="surpriseStat"><strong id="surpriseCount">8</strong><span>SURPRISE SONGS</span></button><button class="stat stat-button" type="button" id="videoStat"><strong id="videoCount">4</strong><span>FULL-SHOW YOUTUBE LINKS</span></button></div>
 </header>
 <div class="video-modal hidden" id="videoModal" role="dialog" aria-modal="true" aria-labelledby="videoModalTitle"><div class="video-modal-card"><div class="video-modal-head"><h2 id="videoModalTitle">Shows with YouTube links</h2><button type="button" id="closeVideoModal" aria-label="Close">×</button></div><div id="videoShowList"></div></div></div>
 <main class="wrap">
 
 <nav class="nav" aria-label="Main sections">
-<button class="active" data-tab="songs">Song Explorer</button><button data-tab="rankings">Surprise Songs</button><button data-tab="shows">Concert Archive</button>
+<button class="active" data-tab="shows">19 Shows</button><button data-tab="sample">23 Standard Setlist Songs</button><button data-tab="rankings">8 Surprise Songs</button><button data-tab="videos">4 Full-Show YouTube Links</button>
 </nav>
 <section id="sample" class="panel hidden"><div class="heading"><div><div class="tag">The recurring set</div><h2>Sample Setlist</h2><p>The standard songs in their recurring order, with the rotating slot marked as a surprise song.</p></div></div><div class="card"><ol id="samplePlaylist" style="columns:2;column-gap:30px;margin:0;padding-left:24px"></ol></div></section>
 <section id="upcoming" class="panel hidden"><div class="heading"><div><div class="tag">Looking ahead</div><h2>Upcoming Shows</h2><p>Future tour dates and locations.</p></div></div><div class="empty">No upcoming show dates have been added yet. When dates are announced or confirmed, they’ll appear here with the city and venue.</div></section>
-<section id="songs" class="panel">
-<div class="heading"><div><div class="tag">Browse the catalog</div><h2>Song Explorer</h2><p>Search a song to see which archived shows included it.</p></div></div>
-<div class="controls"><input id="songSearch" class="search" type="search" placeholder="Search songs or album names…" aria-label="Search songs"><select id="albumFilter" aria-label="Filter by album"><option value="">All album groups</option></select></div>
-<div id="songGrid" class="grid"></div>
-</section>
 <section id="rankings" class="panel hidden">
 <div class="heading"><div><div class="tag">Setlist statistics</div><h2>Surprise Songs</h2><p>Rotating songs outside the recurring setlist, ranked by how many archived nights featured them.</p></div></div>
 <div id="rankingList" class="grid"></div>
 </section>
+<section id="videos" class="panel hidden"><div class="heading"><div><div class="tag">Watch the nights again</div><h2>Full-Show YouTube Links</h2><p>Available full-show videos from the archived concerts.</p></div></div><div id="fullShowVideos" class="grid"></div></section>
 <section id="shows" class="panel hidden">
 <div class="heading"><div><div class="tag">Night by night</div><h2>Concert Archive</h2><p>Open a show to see its collected setlist and available full-show video.</p></div></div>
 <div class="controls"><input id="showSearch" class="search" type="search" placeholder="Search city, venue, or date…" aria-label="Search concerts"></div>
@@ -116,18 +112,18 @@ document.getElementById("standardCount").textContent=standardSongs.length;
 document.getElementById("surpriseCount").textContent=8;
 document.getElementById("showCount").textContent=shows.length;
 document.getElementById("videoCount").textContent=shows.filter(s=>s.video).length;
+document.getElementById("showStat").addEventListener("click",()=>openPanel("shows"));
 document.getElementById("standardStat").addEventListener("click",()=>openPanel("sample"));
 document.getElementById("surpriseStat").addEventListener("click",()=>openPanel("rankings"));
-document.getElementById("showStat").addEventListener("click",()=>openPanel("shows"));
+document.getElementById("videoStat").addEventListener("click",()=>openPanel("videos"));
 const videoModal=document.getElementById("videoModal");
 function openVideoModal(){const linked=shows.filter(s=>s.video).sort((a,b)=>a.date.localeCompare(b.date));document.getElementById("videoShowList").innerHTML=linked.map(s=>'<div class="video-row"><div><strong>'+fmtDate(s.date)+', 2026</strong><span>'+esc(s.city)+' · '+esc(s.venue)+'</span></div><a class="linkbtn" href="'+esc(s.video)+'" target="_blank" rel="noopener">Watch ↗</a></div>').join("")||'<div class="empty">No YouTube links have been added yet.</div>';videoModal.classList.remove("hidden");}
-document.getElementById("videoStat").addEventListener("click",openVideoModal);
+
 document.getElementById("closeVideoModal").addEventListener("click",()=>videoModal.classList.add("hidden"));
 videoModal.addEventListener("click",e=>{if(e.target===videoModal)videoModal.classList.add("hidden");});
 document.addEventListener("keydown",e=>{if(e.key==="Escape")videoModal.classList.add("hidden");});
 const albumFilter=document.getElementById("albumFilter");
 albumOrder.forEach(a=>{const o=document.createElement("option");o.value=a;o.textContent=a;albumFilter.append(o)});
-function renderSongs(){const q=document.getElementById("songSearch").value.toLowerCase().trim(),a=albumFilter.value;const rows=allSongs.filter(s=>(!q||(s.title+" "+s.album).toLowerCase().includes(q))&&(!a||s.album===a)).sort((x,y)=>albumOrder.indexOf(x.album)-albumOrder.indexOf(y.album)||x.title.localeCompare(y.title));document.getElementById("songGrid").innerHTML=rows.map(s=>{const dates=appearances(s.title);return '<article class="card"><span class="album">'+esc(s.album)+'</span><h3>'+esc(s.title)+'</h3><div class="meta">'+(dates.length?dates.length+' of '+shows.length+' archived shows':'No appearances found in this archive')+'</div><div class="song-dates">'+(dates.length?dates.map(d=>'<span class="pill">'+fmtDate(d.date)+' · '+esc(d.city)+'</span>').join(""):'<span class="pill">Not in collected setlists</span>')+'</div></article>'}).join("")||'<div class="empty">No songs match your search.</div>'}
 const standardSongs=["drop dead","u + me = <3","so american","good 4 u","my way","serena joy","bad idea right?","ballad of a homeschooled girl","vampire","purple","stupid song","maggots for brains","traitor","begged","cigarette smoke","honeybee","favorite crime","drivers license","less","the cure","deja vu","all-american bitch","expectations"];
 function renderSamplePlaylist(){const slot=standardSongs.findIndex(t=>key(t)==="traitor");const items=standardSongs.map(t=>({t}));items.splice(slot+1,0,{t:"Surprise song",placeholder:true});document.getElementById("samplePlaylist").innerHTML=items.map(x=>"<li>"+(x.placeholder?'<strong style="color:#8b527d">SURPRISE SONG</strong>':esc(x.t))+"</li>").join("")}
 const surpriseSongVideos={"lacy":["https://youtu.be/7hCR2MXnUwI?is=Ji_KvZ2EQwq1Ddyg"]};
@@ -138,7 +134,8 @@ function openPanel(id){document.querySelectorAll(".nav [data-tab]").forEach(x=>x
 document.querySelectorAll("[data-tab]").forEach(b=>b.addEventListener("click",()=>openPanel(b.dataset.tab)));
 document.getElementById("menuToggle").addEventListener("click",()=>{const m=document.getElementById("quickMenu"),open=m.classList.toggle("hidden")===false;document.getElementById("menuToggle").setAttribute("aria-expanded",String(open));});
 document.addEventListener("click",e=>{if(!e.target.closest(".menu-wrap")){document.getElementById("quickMenu").classList.add("hidden");document.getElementById("menuToggle").setAttribute("aria-expanded","false");}});
-document.getElementById("songSearch").addEventListener("input",renderSongs);albumFilter.addEventListener("change",renderSongs);document.getElementById("showSearch").addEventListener("input",renderShows);document.getElementById("missingSearch").addEventListener("input",renderMissing);
-renderSamplePlaylist();renderSongs();renderRankings();renderShows();renderMissing();
+document.getElementById("showSearch").addEventListener("input",renderShows);document.getElementById("missingSearch").addEventListener("input",renderMissing);
+function renderFullShowVideos(){const linked=[...shows].filter(s=>s.video).sort((a,b)=>a.date.localeCompare(b.date));document.getElementById("fullShowVideos").innerHTML=linked.map(s=>'<article class="card"><div class="tag">Full concert</div><h3>'+fmtDate(s.date)+', 2026</h3><div class="meta">'+esc(s.city)+' · '+esc(s.venue)+'</div><div class="show-actions"><a class="linkbtn" href="'+esc(s.video)+'" target="_blank" rel="noopener">Watch on YouTube ↗</a></div></article>').join("")||'<div class="empty">No full-show videos have been added yet.</div>'}
+renderSamplePlaylist();renderRankings();renderShows();renderMissing();renderFullShowVideos();
 </script>
 </body></html>
