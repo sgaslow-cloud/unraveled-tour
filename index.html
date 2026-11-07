@@ -104,6 +104,7 @@ const appearances = title => shows.filter(s=>s.songs.some(t=>key(t)===key(title)
 const fmtDate = d => new Date(d+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric"});
 const esc = s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const albumOrder=["you seem pretty sad for a girl so in love","SOUR","GUTS","GUTS (SPILLED)"];
+const standardSongs=["drop dead","u + me = <3","so american","good 4 u","my way","serena joy","bad idea right?","ballad of a homeschooled girl","vampire","purple","stupid song","maggots for brains","traitor","begged","cigarette smoke","honeybee","favorite crime","drivers license","less","the cure","deja vu","all-american bitch","expectations"];
 const count = title=>appearances(title).length;
 document.getElementById("standardCount").textContent=standardSongs.length;
 document.getElementById("surpriseCount").textContent=8;
@@ -116,7 +117,7 @@ function openVideoModal(){const linked=shows.filter(s=>s.video).sort((a,b)=>a.da
 document.getElementById("closeVideoModal").addEventListener("click",()=>videoModal.classList.add("hidden"));
 videoModal.addEventListener("click",e=>{if(e.target===videoModal)videoModal.classList.add("hidden");});
 document.addEventListener("keydown",e=>{if(e.key==="Escape")videoModal.classList.add("hidden");});
-const standardSongs=["drop dead","u + me = <3","so american","good 4 u","my way","serena joy","bad idea right?","ballad of a homeschooled girl","vampire","purple","stupid song","maggots for brains","traitor","begged","cigarette smoke","honeybee","favorite crime","drivers license","less","the cure","deja vu","all-american bitch","expectations"];
+
 function renderSamplePlaylist(){const slot=standardSongs.findIndex(t=>key(t)==="traitor");const items=standardSongs.map(t=>({t}));items.splice(slot+1,0,{t:"Surprise song",placeholder:true});document.getElementById("samplePlaylist").innerHTML=items.map(x=>"<li>"+(x.placeholder?'<strong style="color:#8b527d">SURPRISE SONG</strong>':esc(x.t))+"</li>").join("")}
 const surpriseSongVideos={"lacy":["https://youtu.be/7hCR2MXnUwI?is=Ji_KvZ2EQwq1Ddyg"]};
 function renderRankings(){const stats=[...new Map(shows.flatMap(s=>s.songs.map(t=>[key(t),t]))).values()].filter(t=>!standardSongs.some(x=>key(x)===key(t))).map(t=>({title:t,n:count(t)})).sort((a,b)=>b.n-a.n||a.title.localeCompare(b.title));const max=stats[0]?.n||1;document.getElementById("rankingList").innerHTML=stats.map((s,i)=>'<article class="card rank"><div class="ranknum">'+String(i+1).padStart(2,"0")+'</div><div><h3>'+esc(s.title)+'</h3><div class="bar"><i style="width:'+(s.n/max*100)+'%"></i></div>'+((surpriseSongVideos[key(s.title)]||[]).map((url,j)=>'<div class="show-actions"><a class="linkbtn" href="'+esc(url)+'" target="_blank" rel="noopener">Watch surprise-song performance'+((surpriseSongVideos[key(s.title)]||[]).length>1?' '+(j+1):'')+' ↗</a></div>').join(""))+'</div><strong>'+s.n+' / '+shows.length+'</strong></article>').join("")||'<div class="empty">No surprise-song appearances recorded yet.</div>'}
