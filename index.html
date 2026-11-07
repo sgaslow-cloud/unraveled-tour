@@ -23,7 +23,7 @@
 <main class="wrap">
 
 <section id="sample" class="panel hidden"><div class="heading"><div><div class="tag">The recurring set</div><h2>Sample Setlist</h2><p>The standard songs in their recurring order, with the rotating slot marked as a surprise song.</p></div></div><div class="card"><ol id="samplePlaylist" style="columns:2;column-gap:30px;margin:0;padding-left:24px"></ol></div></section>
-<section id="upcoming" class="panel hidden"><div class="heading"><div><div class="tag">Looking ahead</div><h2>Upcoming Shows</h2><p>Future tour dates and locations.</p></div></div><div class="empty">No upcoming show dates have been added yet. When dates are announced or confirmed, they’ll appear here with the city and venue.</div></section>
+<section id="upcoming" class="panel hidden"><div class="heading"><div><div class="tag">Looking ahead · 2026–2027</div><h2>Upcoming Shows</h2><p>All remaining announced dates on The Unraveled Tour, listed chronologically.</p></div></div><div id="upcomingShowList" class="grid"></div><p class="meta" style="margin-top:18px">Dates and venues can change. Check the <a href="https://store.oliviarodrigo.com/pages/tour" target="_blank" rel="noopener">official Olivia Rodrigo tour page</a> for updates.</p></section>
 <section id="rankings" class="panel hidden">
 <div class="heading"><div><div class="tag">Setlist statistics</div><h2>Surprise Songs</h2><p>Rotating songs outside the recurring setlist, ranked by how many archived nights featured them.</p></div></div>
 <div id="rankingList" class="grid"></div>
@@ -128,7 +128,47 @@ document.querySelectorAll("[data-tab]").forEach(b=>b.addEventListener("click",()
 document.getElementById("menuToggle").addEventListener("click",()=>{const m=document.getElementById("quickMenu"),open=m.classList.toggle("hidden")===false;document.getElementById("menuToggle").setAttribute("aria-expanded",String(open));});
 document.addEventListener("click",e=>{if(!e.target.closest(".menu-wrap")){document.getElementById("quickMenu").classList.add("hidden");document.getElementById("menuToggle").setAttribute("aria-expanded","false");}});
 document.getElementById("showSearch").addEventListener("input",renderShows);document.getElementById("missingSearch").addEventListener("input",renderMissing);
+const upcomingShows = [
+["2026-11-07","Philadelphia, PA","Xfinity Mobile Arena"],["2026-11-08","Philadelphia, PA","Xfinity Mobile Arena"],
+["2026-11-11","Atlanta, GA","State Farm Arena"],["2026-11-12","Atlanta, GA","State Farm Arena"],
+["2026-11-15","Orlando, FL","Kia Center"],["2026-11-16","Orlando, FL","Kia Center"],
+["2026-11-19","Sunrise, FL","Amerant Bank Arena"],["2026-11-20","Sunrise, FL","Amerant Bank Arena"],
+["2026-11-23","Nashville, TN","Bridgestone Arena"],["2026-11-24","Nashville, TN","Bridgestone Arena"],
+["2026-12-01","Vancouver, BC","Rogers Arena"],["2026-12-02","Vancouver, BC","Rogers Arena"],
+["2026-12-07","Seattle, WA","Climate Pledge Arena"],["2026-12-08","Seattle, WA","Climate Pledge Arena"],
+["2026-12-11","Oakland, CA","Oakland Arena"],["2026-12-12","Oakland, CA","Oakland Arena"],
+["2026-12-15","Sacramento, CA","Golden 1 Center"],["2026-12-16","Sacramento, CA","Golden 1 Center"],
+["2026-12-19","Las Vegas, NV","T-Mobile Arena"],["2026-12-20","Las Vegas, NV","T-Mobile Arena"],
+["2027-01-12","Inglewood, CA","Intuit Dome"],["2027-01-13","Inglewood, CA","Intuit Dome"],
+["2027-01-16","Inglewood, CA","Intuit Dome"],["2027-01-17","Inglewood, CA","Intuit Dome"],
+["2027-01-20","Inglewood, CA","Intuit Dome"],["2027-01-21","Inglewood, CA","Intuit Dome"],
+["2027-01-24","Inglewood, CA","Intuit Dome"],["2027-01-25","Inglewood, CA","Intuit Dome"],
+["2027-01-28","Inglewood, CA","Intuit Dome"],["2027-01-29","Inglewood, CA","Intuit Dome"],
+["2027-02-11","Brooklyn, NY","Barclays Center"],["2027-02-12","Brooklyn, NY","Barclays Center"],
+["2027-02-15","Brooklyn, NY","Barclays Center"],["2027-02-16","Brooklyn, NY","Barclays Center"],
+["2027-02-19","Brooklyn, NY","Barclays Center"],["2027-02-20","Brooklyn, NY","Barclays Center"],
+["2027-02-23","Brooklyn, NY","Barclays Center"],["2027-02-24","Brooklyn, NY","Barclays Center"],
+["2027-02-27","Brooklyn, NY","Barclays Center"],["2027-02-28","Brooklyn, NY","Barclays Center"],
+["2027-03-19","Stockholm, Sweden","Avicii Arena"],["2027-03-20","Stockholm, Sweden","Avicii Arena"],
+["2027-03-23","Amsterdam, Netherlands","Ziggo Dome"],["2027-03-24","Amsterdam, Netherlands","Ziggo Dome"],
+["2027-03-27","Amsterdam, Netherlands","Ziggo Dome"],["2027-03-28","Amsterdam, Netherlands","Ziggo Dome"],
+["2027-04-01","Munich, Germany","Olympiahalle"],["2027-04-02","Munich, Germany","Olympiahalle"],
+["2027-04-05","London, UK","The O2"],["2027-04-06","London, UK","The O2"],
+["2027-04-08","London, UK","The O2"],["2027-04-09","London, UK","The O2"],
+["2027-04-12","London, UK","The O2"],["2027-04-14","London, UK","The O2"],
+["2027-04-15","London, UK","The O2"],["2027-04-19","London, UK","The O2"],
+["2027-04-20","London, UK","The O2"],["2027-04-23","Nanterre, France","Paris La Défense Arena"],
+["2027-04-24","Nanterre, France","Paris La Défense Arena"],["2027-04-27","Milan, Italy","Unipol Dome"],
+["2027-04-28","Milan, Italy","Unipol Dome"],["2027-05-01","Barcelona, Spain","Palau Sant Jordi"],
+["2027-05-02","Barcelona, Spain","Palau Sant Jordi"],["2027-05-05","Barcelona, Spain","Palau Sant Jordi"],
+["2027-05-06","Barcelona, Spain","Palau Sant Jordi"],["2027-05-09","London, UK","The O2"],
+["2027-05-10","London, UK","The O2"]
+];
+function renderUpcomingShows(){
+ const host=document.getElementById("upcomingShowList");
+ host.innerHTML=upcomingShows.map(([date,city,venue])=>'<article class="card"><div class="tag">'+new Date(date+"T12:00:00").toLocaleDateString("en-US",{weekday:"long"})+'</div><div class="show"><div><h3>'+fmtDate(date)+', '+date.slice(0,4)+'</h3><div><strong>'+esc(city)+'</strong></div><div class="meta">'+esc(venue)+'</div></div><span class="album">UPCOMING</span></div><div class="show-actions"><a class="linkbtn secondary" href="https://store.oliviarodrigo.com/pages/tour" target="_blank" rel="noopener">Official tour info ↗</a></div></article>').join("");
+}
 function renderFullShowVideos(){const linked=[...shows].filter(s=>s.video).sort((a,b)=>a.date.localeCompare(b.date));document.getElementById("fullShowVideos").innerHTML=linked.map(s=>'<article class="card"><div class="tag">Full concert</div><h3>'+fmtDate(s.date)+', 2026</h3><div class="meta">'+esc(s.city)+' · '+esc(s.venue)+'</div><div class="show-actions"><a class="linkbtn" href="'+esc(s.video)+'" target="_blank" rel="noopener">Watch on YouTube ↗</a></div></article>').join("")||'<div class="empty">No full-show videos have been added yet.</div>'}
-renderSamplePlaylist();renderRankings();renderShows();renderMissing();renderFullShowVideos();
+renderSamplePlaylist();renderRankings();renderShows();renderMissing();renderUpcomingShows();renderFullShowVideos();
 </script>
 </body></html>
