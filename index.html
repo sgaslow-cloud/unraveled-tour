@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- Release verification: 19-show archive, refreshed 2026-11-06 -->
+<!-- Release verification: 21-show archive, refreshed 2026-11-10 -->
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -62,9 +62,11 @@ const shows = [
 {date:"2026-10-26",city:"Toronto, ON",venue:"Scotiabank Arena",source:"https://www.setlist.fm/setlist/olivia-rodrigo/2026/scotiabank-arena-toronto-on-canada-43770bcb.html",video:"",songs:["drop dead","u + me = <3","so american","good 4 u","my way","serena joy","bad idea right?","ballad of a homeschooled girl","vampire","purple","stupid song","maggots for brains","traitor","begged","lacy","cigarette smoke","honeybee","favorite crime","drivers license","less","the cure","deja vu","all-american bitch","expectations"]},
 {date:"2026-10-27",city:"Toronto, ON",venue:"Scotiabank Arena",source:"https://www.setlist.fm/setlist/olivia-rodrigo/2026/scotiabank-arena-toronto-on-canada-5b770bc8.html",video:"https://youtu.be/xLVO-zITzsA?si=C2R-mQxU3MNqy0Lu",songs:["drop dead","u + me = <3","so american","good 4 u","my way","serena joy","bad idea right?","ballad of a homeschooled girl","vampire","purple","stupid song","maggots for brains","traitor","begged","lacy","cigarette smoke","honeybee","favorite crime","drivers license","less","the cure","deja vu","all-american bitch","expectations"]},
 {date:"2026-10-29",city:"Columbus, OH",venue:"Value City Arena",source:"https://www.setlist.fm/setlist/olivia-rodrigo/2026/value-city-arena-columbus-oh-43770bcf.html",video:"",songs:["drop dead","u + me = <3","so american","good 4 u","my way","serena joy","bad idea right?","ballad of a homeschooled girl","vampire","purple","stupid song","maggots for brains","traitor","pretty isn't pretty","begged","cigarette smoke","honeybee","favorite crime","drivers license","less","the cure","deja vu","all-american bitch","expectations"]},
-{date:"2026-10-30",city:"Columbus, OH",venue:"Value City Arena",source:"https://www.setlist.fm/setlist/olivia-rodrigo/2026/value-city-arena-columbus-oh-5b770bcc.html",video:"",songs:["drop dead","u + me = <3","so american","good 4 u","my way","serena joy","bad idea right?","ballad of a homeschooled girl","vampire","purple","stupid song","maggots for brains","traitor","begged","cigarette smoke","honeybee","favorite crime","drivers license","less","the cure","deja vu","all-american bitch","expectations"]}
+{date:"2026-10-30",city:"Columbus, OH",venue:"Value City Arena",source:"https://www.setlist.fm/setlist/olivia-rodrigo/2026/value-city-arena-columbus-oh-5b770bcc.html",video:"",songs:["drop dead","u + me = <3","so american","good 4 u","my way","serena joy","bad idea right?","ballad of a homeschooled girl","vampire","purple","stupid song","maggots for brains","traitor","begged","cigarette smoke","honeybee","favorite crime","drivers license","less","the cure","deja vu","all-american bitch","expectations"]},
+{date:"2026-11-07",city:"Philadelphia, PA",venue:"Xfinity Mobile Arena",source:"https://www.setlist.fm/setlist/olivia-rodrigo/2026/xfinity-mobile-arena-philadelphia-pa-53770bc5.html",video:"",songs:["drop dead","u + me = <3","so american","good 4 u","my way","serena joy","bad idea right?","ballad of a homeschooled girl","vampire","purple","stupid song","maggots for brains","what's wrong with me","traitor","begged","cigarette smoke","honeybee","favorite crime","drivers license","less","the cure","deja vu","all-american bitch","expectations"]},
+{date:"2026-11-08",city:"Philadelphia, PA",venue:"Xfinity Mobile Arena",source:"https://www.setlist.fm/setlist/olivia-rodrigo/2026/xfinity-mobile-arena-philadelphia-pa-43770bbb.html",video:"",songs:["drop dead","u + me = <3","so american","good 4 u","my way","serena joy","bad idea right?","ballad of a homeschooled girl","vampire","purple","stupid song","maggots for brains","traitor","begged","Can't Catch Me Now","cigarette smoke","honeybee","favorite crime","drivers license","less","the cure","deja vu","all-american bitch","expectations"]}
 ];
-// Verified individual setlist.fm records added Nov 6, 2026.
+// Verified individual setlist.fm records added Nov 6 and Nov 10, 2026.
 // Keep tape/video interludes out of song appearance counts.
 const commonLate = ["drop dead","u + me = <3","so american","good 4 u","my way","serena joy","bad idea right?","ballad of a homeschooled girl","vampire","purple","stupid song","maggots for brains","traitor"];
 const winterEncore = ["begged","cigarette smoke","honeybee","favorite crime","drivers license","less","the cure","deja vu","all-american bitch","expectations"];
@@ -129,7 +131,6 @@ document.getElementById("menuToggle").addEventListener("click",()=>{const m=docu
 document.addEventListener("click",e=>{if(!e.target.closest(".menu-wrap")){document.getElementById("quickMenu").classList.add("hidden");document.getElementById("menuToggle").setAttribute("aria-expanded","false");}});
 document.getElementById("showSearch").addEventListener("input",renderShows);document.getElementById("missingSearch").addEventListener("input",renderMissing);
 const upcomingShows = [
-["2026-11-07","Philadelphia, PA","Xfinity Mobile Arena"],["2026-11-08","Philadelphia, PA","Xfinity Mobile Arena"],
 ["2026-11-11","Atlanta, GA","State Farm Arena"],["2026-11-12","Atlanta, GA","State Farm Arena"],
 ["2026-11-15","Orlando, FL","Kia Center"],["2026-11-16","Orlando, FL","Kia Center"],
 ["2026-11-19","Sunrise, FL","Amerant Bank Arena"],["2026-11-20","Sunrise, FL","Amerant Bank Arena"],
