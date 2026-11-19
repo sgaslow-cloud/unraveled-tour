@@ -120,8 +120,6 @@ document.getElementById("standardCount").textContent=standardSongs.length;
 document.getElementById("surpriseCount").textContent=8;
 document.getElementById("showCount").textContent=shows.length;
 document.getElementById("videoCount").textContent=shows.filter(s=>s.video).length;
-document.getElementById("upcomingCount").textContent=upcomingShows.length;
-
 const videoModal=document.getElementById("videoModal");
 function openVideoModal(){const linked=shows.filter(s=>s.video).sort((a,b)=>a.date.localeCompare(b.date));document.getElementById("videoShowList").innerHTML=linked.map(s=>'<div class="video-row"><div><strong>'+fmtDate(s.date)+', 2026</strong><span>'+esc(s.city)+' · '+esc(s.venue)+'</span></div><a class="linkbtn" href="'+esc(s.video)+'" target="_blank" rel="noopener">Watch ↗</a></div>').join("")||'<div class="empty">No YouTube links have been added yet.</div>';videoModal.classList.remove("hidden");}
 
@@ -170,11 +168,13 @@ const upcomingShows = [
 ["2027-05-06","Barcelona, Spain","Palau Sant Jordi"],["2027-05-09","London, UK","The O2"],
 ["2027-05-10","London, UK","The O2"]
 ];
+document.getElementById("upcomingCount").textContent=upcomingShows.length;
 function renderUpcomingShows(){
  const host=document.getElementById("upcomingShowList");
  host.innerHTML=upcomingShows.map(([date,city,venue])=>'<article class="card"><div class="tag">'+new Date(date+"T12:00:00").toLocaleDateString("en-US",{weekday:"long"})+'</div><div class="show"><div><h3>'+fmtDate(date)+', '+date.slice(0,4)+'</h3><div><strong>'+esc(city)+'</strong></div><div class="meta">'+esc(venue)+'</div></div><span class="album">UPCOMING</span></div><div class="show-actions"><a class="linkbtn secondary" href="https://store.oliviarodrigo.com/pages/tour" target="_blank" rel="noopener">Official tour info ↗</a></div></article>').join("");
 }
 function renderFullShowVideos(){const linked=[...shows].filter(s=>s.video).sort((a,b)=>a.date.localeCompare(b.date));document.getElementById("fullShowVideos").innerHTML=linked.map(s=>'<article class="card"><div class="tag">Full concert</div><h3>'+fmtDate(s.date)+', 2026</h3><div class="meta">'+esc(s.city)+' · '+esc(s.venue)+'</div><div class="show-actions"><a class="linkbtn" href="'+esc(s.video)+'" target="_blank" rel="noopener">Watch on YouTube ↗</a></div></article>').join("")||'<div class="empty">No full-show videos have been added yet.</div>'}
 renderSamplePlaylist();renderRankings();renderShows();renderMissing();renderUpcomingShows();renderFullShowVideos();
+openPanel("shows");
 </script>
 </body></html>
